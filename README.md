@@ -1,70 +1,96 @@
 # Korjebet
-katlanan para!
+katlanabilir para
 
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KORJEBET Demo</title>
+<title>KORJEBET | Demo</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101015;color:white;font-family:Arial;text-align:center}
-header{padding:22px;border-bottom:1px solid #66502c}
-h1{color:#e6bd69;letter-spacing:4px}
-main{max-width:480px;margin:35px auto;padding:20px}
-.card{background:#202027;border:1px solid #806337;border-radius:18px;padding:25px}
-.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:25px 0}
-.reels span{background:#111;padding:15px 2px;border-radius:8px;font-size:25px}
-button{background:#e6bd69;border:0;border-radius:10px;padding:15px 30px;font-weight:bold;font-size:17px}
-select{padding:12px;background:#111;color:white;border-radius:8px}
-p{color:#bbb}
+body{margin:0;background:#08090d;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 16px;text-align:center;background:linear-gradient(135deg,#17130b,#09090d);border-bottom:1px solid #b58b3c}
+.logo{font-size:30px;font-weight:900;letter-spacing:5px;color:#eac46e}
+.tag{color:#aaa;font-size:11px;letter-spacing:3px;margin-top:8px}
+nav{display:flex;justify-content:center;gap:22px;padding:14px;font-size:13px;color:#d8bd82}
+main{max-width:520px;margin:25px auto;padding:0 14px}
+.card{background:linear-gradient(145deg,#1a1b21,#101116);border:1px solid #66502c;border-radius:20px;padding:22px;box-shadow:0 15px 40px #0008}
+h2{text-align:center;margin:5px 0 18px;color:#f0d18d}
+.balance{background:#0b0c10;border:1px solid #4d3b20;border-radius:13px;padding:15px;text-align:center}
+.balance small{color:#aaa}
+.balance strong{display:block;color:#f0c66d;font-size:27px;margin-top:7px}
+.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:22px 0}
+.reels span{display:grid;place-items:center;min-height:62px;background:linear-gradient(145deg,#292a30,#111217);border:1px solid #594625;border-radius:10px;font-size:27px}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+select,button{border-radius:10px;padding:14px 18px;font-size:15px}
+select{background:#111;color:white;border:1px solid #8c6a32}
+button{background:linear-gradient(135deg,#f4d58d,#b78635);border:0;color:#17120a;font-weight:900;cursor:pointer}
+button:disabled{opacity:.5}
+#result{text-align:center;min-height:24px;color:#f0d18d;margin-top:17px}
+.rules{font-size:12px;color:#aaa;line-height:1.7;text-align:center;margin-top:18px}
+footer{text-align:center;color:#777;font-size:11px;padding:25px}
 </style>
 </head>
 <body>
-<header><h1>KORJEBET</h1><p>SANAL KREDİ DEMOSU</p></header>
+<header>
+<div class="logo">KORJEBET</div>
+<div class="tag">SANAL OYUN DENEYİMİ</div>
+</header>
+<nav><span>ANA SAYFA</span><span>SLOT DEMO</span><span>HAKKINDA</span></nav>
 <main>
-<div class="card">
-<h2>Hoş geldin!</h2>
-<p>Sanal bakiyen</p>
-<h2 id="balance">1000 kredi</h2>
-<div class="reels" id="reels">
-<span>🍒</span><span>⭐</span><span>💎</span><span>🔔</span><span>🍋</span>
-<span>🍋</span><span>🍒</span><span>⭐</span><span>💎</span><span>🔔</span>
-<span>💎</span><span>🔔</span><span>🍋</span><span>🍒</span><span>⭐</span>
-<span>⭐</span><span>💎</span><span>🔔</span><span>🍋</span><span>🍒</span>
+<section class="card">
+<h2>✦ ALTIN SLOT ✦</h2>
+<div class="balance">
+<small>SANAL KREDİN</small>
+<strong id="balance">1000</strong>
 </div>
-<p>Oyun sonucu rastgele belirlenir.</p>
+<div class="reels" id="reels"></div>
+<div class="controls">
 <select id="bet">
 <option value="10">10 kredi</option>
 <option value="25">25 kredi</option>
 <option value="50">50 kredi</option>
 </select>
-<br><br>
-<button onclick="spin()">SPIN</button>
-<p id="result">İyi eğlenceler!</p>
+<button id="spin" onclick="spin()">OYNA</button>
 </div>
-<p>Bu yalnızca sanal kredili bir demo oyunudur.</p>
+<p id="result">Bol şans!</p>
+<div class="rules">
+Demo başlangıç kredisi: 1000<br>
+Her turda 20 kredi sabit maliyet düşer.<br>
+Kazanma olasılığı: %20. Kazanç: 100 sanal kredi.<br>
+Sonuçlar tüm oyuncular için aynı kuralla rastgele belirlenir.
+</div>
+</section>
 </main>
+<footer>© KORJEBET · Yalnızca sanal kredili demo. Gerçek para kullanılmaz.</footer>
 <script>
 let balance=1000;
-function spin(){
-let bet=Number(document.getElementById("bet").value);
-if(balance<bet){document.getElementById("result").textContent="Yeterli kredin yok.";return;}
-balance-=bet;
-let symbols=["🍒","⭐","💎","🔔","🍋"];
-let cells=Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]);
-let won=Math.random()<0.20;
-if(won){
-let row=Math.floor(Math.random()*4);
-let start=Math.floor(Math.random()*3);
-let s=symbols[Math.floor(Math.random()*symbols.length)];
-for(let i=0;i<3;i++)cells[row*5+start+i]=s;
-balance+=bet*2;
+const symbols=["🍒","⭐","💎","🔔","🍋"];
+const reels=document.getElementById("reels");
+function draw(cells){
+reels.innerHTML=cells.map(s=>"<span>"+s+"</span>").join("");
 }
-document.getElementById("reels").innerHTML=cells.map(x=>"<span>"+x+"</span>").join("");
-document.getElementById("balance").textContent=balance+" kredi";
-document.getElementById("result").textContent=won?"Tebrikler! Sanal kredi kazandın.":"Bu tur kazanamadın.";
+draw(Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]));
+function spin(){
+const btn=document.getElementById("spin");
+const result=document.getElementById("result");
+if(balance<20){result.textContent="Sanal kredin yetersiz.";return;}
+btn.disabled=true;
+balance-=20;
+let cells=Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]);
+const won=Math.random()<0.20;
+if(won){
+const row=Math.floor(Math.random()*4);
+const start=Math.floor(Math.random()*3);
+const symbol=symbols[Math.floor(Math.random()*symbols.length)];
+for(let i=0;i<3;i++)cells[row*5+start+i]=symbol;
+balance+=100;
+}
+draw(cells);
+document.getElementById("balance").textContent=balance;
+result.textContent=won?"Tebrikler! 100 sanal kredi kazandın.":"Bu tur kazanamadın.";
+btn.disabled=false;
 }
 </script>
 </body>
