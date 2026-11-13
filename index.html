@@ -1,95 +1,129 @@
 
 <!DOCTYPE html>
-<html lang="tr", global>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KORJEBET | Real</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORJEBET | Royal Cards</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#08090d;color:#fff;font-family:Arial,sans-serif}
-header{padding:24px 16px;text-align:center;background:linear-gradient(135deg,#17130b,#09090d);border-bottom:1px solid #b58b3c}
-.logo{font-size:30px;font-weight:900;letter-spacing:5px;color:#eac46e}
-.tag{color:#aaa;font-size:11px;letter-spacing:3px;margin-top:8px}
-nav{display:flex;justify-content:center;gap:22px;padding:14px;font-size:13px;color:#d8bd82}
-main{max-width:520px;margin:25px auto;padding:0 14px}
-.card{background:linear-gradient(145deg,#1a1b21,#101116);border:1px solid #66502c;border-radius:20px;padding:22px;box-shadow:0 15px 40px #0008}
-h2{text-align:center;margin:5px 0 18px;color:#f0d18d}
-.balance{background:#0b0c10;border:1px solid #4d3b20;border-radius:13px;padding:15px;text-align:center}
+body{margin:0;background:#090a0e;color:#f8e6bd;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px;background:linear-gradient(130deg,#211707,#090a0e);border-bottom:1px solid #b58b43}
+.logo{font-size:32px;font-weight:900;letter-spacing:5px;color:#e9c16c}
+header p{font-size:10px;letter-spacing:4px;color:#bca77e}
+nav{display:flex;justify-content:center;gap:20px;padding:15px;color:#d9bd7b;font-size:12px}
+main{max-width:520px;margin:20px auto;padding:12px}
+.panel{background:linear-gradient(145deg,#1c1b19,#101116);border:1px solid #76582b;border-radius:20px;padding:18px;box-shadow:0 15px 45px #000}
+h2{text-align:center;color:#e9c779}
+.balance{text-align:center;background:#090a0e;padding:15px;border-radius:12px;border:1px solid #55401f}
 .balance small{color:#aaa}
-.balance strong{display:block;color:#f0c66d;font-size:27px;margin-top:7px}
-.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:22px 0}
-.reels span{display:grid;place-items:center;min-height:62px;background:linear-gradient(145deg,#292a30,#111217);border:1px solid #594625;border-radius:10px;font-size:27px}
-.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-select,button{border-radius:10px;padding:14px 18px;font-size:15px}
-select{background:#111;color:white;border:1px solid #8c6a32}
-button{background:linear-gradient(135deg,#f4d58d,#b78635);border:0;color:#17120a;font-weight:900;cursor:pointer}
+.balance strong{display:block;font-size:28px;color:#f2cf7e;margin-top:7px}
+.reels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:20px 0}
+.card{height:82px;border-radius:10px;background:linear-gradient(145deg,#fff,#d9d2c3);color:#171717;display:flex;flex-direction:column;justify-content:center;align-items:center;font-weight:bold;box-shadow:0 4px 9px #0008;transition:transform .2s}
+.card.red{color:#b32232}
+.card .rank{font-size:28px}
+.card .suit{font-size:19px}
+.card.win{outline:3px solid #f4cb64;transform:scale(1.04)}
+.controls{display:flex;gap:10px}
+select,button{padding:14px;border-radius:10px;font-size:15px}
+select{flex:1;background:#111;color:white;border:1px solid #94713c}
+button{background:linear-gradient(130deg,#f5dc9a,#b17b2c);border:0;font-weight:bold;color:#171008;cursor:pointer}
 button:disabled{opacity:.5}
-#result{text-align:center;min-height:24px;color:#f0d18d;margin-top:17px}
-.rules{font-size:12px;color:#aaa;line-height:1.7;text-align:center;margin-top:18px}
-footer{text-align:center;color:#777;font-size:11px;padding:25px}
+#spin{flex:1}
+.result{text-align:center;min-height:28px;margin:18px 0;color:#f3d48c}
+.multipliers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mult{background:#11131a;border:1px solid #5d4828;border-radius:8px;text-align:center;padding:9px 2px;color:#e9c779;font-weight:bold;font-size:13px}
+.note{text-align:center;color:#999;font-size:11px;line-height:1.6;margin-top:18px}
+footer{text-align:center;color:#777;padding:25px;font-size:11px}
+@media(max-width:360px){.card{height:68px}.card .rank{font-size:23px}}
 </style>
 </head>
 <body>
 <header>
 <div class="logo">KORJEBET</div>
-<div class="tag">SANAL OYUN DENEYİMİ</div>
+<p>ROYAL CARDS • VIRTUAL CASINO</p>
 </header>
-<nav><span>ANA SAYFA</span><span>SLOT DEMO</span><span>HAKKINDA</span></nav>
+<nav><span>ANA SAYFA</span><span>ROYAL SLOT</span><span>HESABIM</span></nav>
 <main>
-<section class="card">
-<h2>✦ ALTIN SLOT ✦</h2>
+<section class="panel">
+<h2>♠ ROYAL CARDS ♠</h2>
 <div class="balance">
-<small>SANAL KREDİN</small>
+<small>SANAL BAKİYEN</small>
 <strong id="balance">1000</strong>
 </div>
 <div class="reels" id="reels"></div>
 <div class="controls">
 <select id="bet">
 <option value="10">10 kredi</option>
-<option value="25">25 kredi</option>
+<option value="20">20 kredi</option>
 <option value="50">50 kredi</option>
+<option value="100">100 kredi</option>
 </select>
-<button id="spin" onclick="spin()">OYNA</button>
+<button id="spin">KARTLARI AÇ</button>
 </div>
-<p id="result">Bol şans!</p>
-<div class="rules">
-Demo başlangıç kredisi: 1000<br>
-Her turda 20 kredi sabit maliyet düşer.<br>
-Kazanma olasılığı: %20. Kazanç: 100 sanal kredi.<br>
-Sonuçlar tüm oyuncular için aynı kuralla rastgele belirlenir.
-</div>
+<div class="result" id="result">Şansını dene!</div>
+<h3 style="text-align:center;color:#e9c779">ÇARPANLAR</h3>
+<div class="multipliers" id="multipliers"></div>
+<p class="note">Yalnızca sanal kredili demo. Gerçek para yatırma veya çekme yapılmaz. Sonuçlar rastgele oluşturulur.</p>
 </section>
 </main>
-<footer>© KORJEBET · Yalnızca sanal kredili demo. Gerçek para kullanılmaz.</footer>
+<footer>© KORJEBET ROYAL CARDS</footer>
 <script>
-let balance=100000;
-const symbols=["🍒","⭐","💎","🔔","🍋","💵"];
+let balance=1000;
+const ranks=["K","Q","J","A"];
+const suits=["♠","♥","♦","♣"];
+const multipliers=Array.from({length:99},(_,i)=>i+2);
 const reels=document.getElementById("reels");
-function draw(cells){
-reels.innerHTML=cells.map(s=>"<span>"+s+"</span>").join("");
-}
-draw(Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]));
-function spin(){
-const btn=document.getElementById("spin");
+const balanceEl=document.getElementById("balance");
 const result=document.getElementById("result");
-if(balance<20){result.textContent="Sanal kredin yetersiz.";return;}
-btn.disabled=true;
-balance-=20;
-let cells=Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]);
-const won=Math.random()<0.20;
+const spin=document.getElementById("spin");
+document.getElementById("multipliers").innerHTML=
+multipliers.map(n=>`<div class="mult">${n}x</div>`).join("");
+function makeCard(){
+return {rank:ranks[Math.floor(Math.random()*4)],suit:suits[Math.floor(Math.random()*4)]};
+}
+function draw(cards,winning=[]){
+reels.innerHTML=cards.map((c,i)=>{
+let red=c.suit==="♥"||c.suit==="♦";
+return `<div class="card ${red?"red":""} ${winning.includes(i)?"win":""}">
+<span class="rank">${c.rank}</span><span class="suit">${c.suit}</span></div>`;
+}).join("");
+}
+draw(Array.from({length:20},makeCard));
+spin.onclick=()=>{
+let bet=Number(document.getElementById("bet").value);
+if(balance<bet){result.textContent="Sanal bakiyen yetersiz.";return;}
+spin.disabled=true;
+balance-=bet;
+balanceEl.textContent=balance;
+result.textContent="Kartlar açılıyor...";
+reels.style.opacity=".35";
+setTimeout(()=>{
+let cards=Array.from({length:20},makeCard);
+let won=Math.random()<0.20;
+let indexes=[];
 if(won){
-const row=Math.floor(Math.random()*4);
-const start=Math.floor(Math.random()*3);
-const symbol=symbols[Math.floor(Math.random()*symbols.length)];
-for(let i=0;i<3;i++)cells[row*5+start+i]=symbol;
-balance+=1000;
+let row=Math.floor(Math.random()*5);
+let col=Math.floor(Math.random()*2);
+let chosen=makeCard();
+for(let i=0;i<3;i++){
+let index=row*4+col+i;
+cards[index]=chosen;
+indexes.push(index);
 }
-draw(cells);
-document.getElementById("balance").textContent=balance;
-result.textContent=won?"Tebrikler! 100 sanal kredi kazandın.":"Bu tur kazanamadın.";
-btn.disabled=false;
+let multiplier=multipliers[Math.floor(Math.random()*multipliers.length)];
+let prize=bet*multiplier;
+balance+=prize;
+result.textContent=`KAZANDIN! ${multiplier}x • +${prize} sanal kredi`;
+}else{
+result.textContent="Bu tur kazanamadın. Tekrar deneyebilirsin.";
 }
+draw(cards,indexes);
+balanceEl.textContent=balance;
+reels.style.opacity="1";
+spin.disabled=false;
+},650);
+};
 </script>
 </body>
 </html>
