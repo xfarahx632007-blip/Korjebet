@@ -1,2 +1,2 @@
 # Korjebet
-Bahis 
+katlanan para!
