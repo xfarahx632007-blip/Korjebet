@@ -3,530 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KORJEBET - VIP Casino Slot</title>
+    <title>KORJEBET | VIP Casino & Slot Platformu</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-color: #0b0b0b;
-            --panel-bg: #141414;
-            --gold-primary: #f39c12;
-            --gold-light: #f1c40f;
-            --gold-dark: #b7950b;
-            --text-color: #ffffff;
-            --accent-red: #e74c3c;
+            --bg-dark: #090a0d;
+            --bg-panel: #12141a;
+            --bg-card: #1a1d26;
+            --border-color: #262a36;
+            --gold-main: #f59e0b;
+            --gold-bright: #fbbf24;
+            --gold-dark: #b45309;
+            --green-win: #10b981;
+            --red-loss: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Ekran Sarsıntı Efekti */
+        /* Ekran Sarsıntısı */
         @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-3px, 0px) rotate(-1deg); }
-            40% { transform: translate(3px, 2px) rotate(1deg); }
-            60% { transform: translate(-1px, -1px) rotate(0deg); }
-            80% { transform: translate(1px, 2px) rotate(-1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+            0%, 100% { transform: translate(0, 0); }
+            20% { transform: translate(-4px, 2px) rotate(-0.5deg); }
+            40% { transform: translate(4px, -2px) rotate(0.5deg); }
+            60% { transform: translate(-3px, -1px); }
+            80% { transform: translate(3px, 2px); }
         }
+        .shake { animation: shake 0.45s ease-in-out; }
 
-        .shake-screen {
-            animation: shake 0.5s ease-in-out;
-        }
-
+        /* Üst Header */
         header {
-            width: 100%;
-            background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
-            border-bottom: 2px solid var(--gold-primary);
-            padding: 15px 30px;
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(243, 156, 18, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
-            font-size: 28px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--gold-dark), var(--gold-light), var(--gold-primary));
+            letter-spacing: 1.5px;
+            background: linear-gradient(90deg, var(--gold-main), var(--gold-bright));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(243, 156, 18, 0.3);
         }
 
-        .wallet {
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid var(--gold-primary);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 16px;
-            color: var(--gold-light);
-            box-shadow: inset 0 0 10px rgba(243, 156, 18, 0.2);
+        .brand span {
+            font-size: 11px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--gold-bright);
+            -webkit-text-fill-color: var(--gold-bright);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        /* Canlı Kazananlar Ticker */
-        .ticker-container {
-            width: 100%;
-            background: #111;
-            border-bottom: 1px solid #333;
+        .header-wallet {
+            display: flex;
+            align-items: center;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .balance-box {
+            padding: 8px 14px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--gold-bright);
+        }
+
+        .deposit-btn-top {
+            background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
+            color: #000;
+            border: none;
+            padding: 9px 14px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .deposit-btn-top:hover { opacity: 0.9; }
+
+        /* Canlı Kazanç Akışı (Ticker) */
+        .live-ticker {
+            background: #0d0f14;
+            border-bottom: 1px solid var(--border-color);
+            padding: 6px 0;
             overflow: hidden;
             white-space: nowrap;
-            padding: 6px 0;
-            font-size: 13px;
-            color: #aaa;
+            font-size: 12px;
         }
 
-        .ticker-text {
+        .ticker-track {
             display: inline-block;
-            animation: ticker 25s linear infinite;
+            animation: scrollTicker 30s linear infinite;
         }
 
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
+        @keyframes scrollTicker {
+            0% { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
 
-        .ticker-text span {
-            color: var(--gold-light);
-            margin-right: 40px;
-            font-weight: bold;
+        .ticker-item {
+            display: inline-block;
+            margin-right: 35px;
+            color: var(--text-muted);
         }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin: 20px 0;
-            width: 100%;
-            max-width: 600px;
-            padding: 0 15px;
-        }
-
-        /* Slot Tahtası 4x5 */
-        .slot-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            background: linear-gradient(145deg, #181818, #0a0a0a);
-            padding: 20px;
-            border-radius: 16px;
-            border: 3px solid var(--gold-primary);
-            box-shadow: 0 0 30px rgba(243, 156, 18, 0.3), inset 0 0 15px rgba(0,0,0,0.8);
-            width: 100%;
-        }
-
-        .card-slot {
-            aspect-ratio: 3/4;
-            background: linear-gradient(135deg, #222, #111);
-            border: 2px solid var(--gold-dark);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--text-color);
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card-slot.win {
-            border-color: var(--gold-light);
-            box-shadow: 0 0 20px var(--gold-light);
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #332b00, #1a1400);
-        }
-
-        .card-slot .suit {
-            font-size: 20px;
-            margin-top: 4px;
-        }
-
-        /* Kontrol Paneli */
-        .control-panel {
-            background: var(--panel-bg);
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        }
-
-        .controls-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn {
-            background: linear-gradient(to bottom, var(--gold-light), var(--gold-primary));
-            color: #000;
-            font-weight: bold;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            transition: all 0.2s;
-            flex: 1;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(to bottom, #f39c12, #d68910);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
-        }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .btn-secondary {
-            background: #222;
-            color: var(--gold-light);
-            border: 1px solid var(--gold-dark);
-            box-shadow: none;
-        }
-
-        .btn-secondary:hover {
-            background: #333;
-            box-shadow: 0 0 10px rgba(243, 156, 18, 0.2);
-        }
-
-        .btn-secondary.active {
-            background: var(--gold-primary);
-            color: #000;
-        }
-
-        .info-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #aaa;
-            background: #0d0d0d;
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #222;
-        }
-
-        .info-display span {
-            color: var(--gold-light);
-            font-weight: bold;
-        }
-
-        footer {
-            padding: 15px;
-            font-size: 12px;
-            color: #555;
-            text-align: center;
-            border-top: 1px solid #1a1a1a;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">KORJEBET VIP</div>
-        <div class="wallet">Bakiye: <span id="balance">10,000</span> ₺</div>
-    </header>
-
-    <!-- Canlı Kazananlar Akışı -->
-    <div class="ticker-container">
-        <div class="ticker-text" id="tickerText">
-            <span>Caner_34: 50x Kazandı! (12,500 ₺)</span> • 
-            <span>BetKing_77: 100x Mega Jackpot! (50,000 ₺)</span> • 
-            <span>QueenSlot: 20x Kazandı! (4,000 ₺)</span> • 
-            <span>LuckyHasan: 10x Kazandı! (2,000 ₺)</span>
-        </div>
-    </div>
-
-    <div class="main-container">
-        <!-- 4 Sütun x 5 Satır Slot Tahtası -->
-        <div class="slot-board" id="slotBoard">
-            <!-- JavaScript ile doldurulacak -->
-        </div>
-
-        <!-- Kontrol Paneli -->
-        <div class="control-panel">
-            <div class="info-display">
-                <div>Bahis: <span id="currentBet">250</span> ₺</div>
-                <div>Son Kazanç: <span id="lastWin">0</span> ₺</div>
-            </div>
-            
-            <div class="controls-row">
-                <button class="btn btn-secondary" id="betMinus" onclick="changeBet(-50)">- Bahis</button>
-                <button class="btn btn-secondary" id="betPlus" onclick="changeBet(50)">+ Bahis</button>
-                <button class="btn btn-secondary" id="autoBtn" onclick="toggleAutoSpin()">Auto Spin: KAPALI</button>
-            </div>
-
-            <button class="btn" id="spinBtn" onclick="spin()">SPİN AT</button>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2026 KORJEBET Entertainment. Tüm Hakları Saklıdır. Sadece Eğlence Amaçlıdır.
-    </footer>
-
-    <script>
-        // --- WEB AUDIO API SES MOTORU ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playSound(type) {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            const now = audioCtx.currentTime;
-
-            if (type === 'click') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, now);
-                gainNode.gain.setValueAtTime(0.05, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-                osc.start(now);
-                osc.stop(now + 0.05);
-            } else if (type === 'spin') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(150 + Math.random() * 100, now);
-                gainNode.gain.setValueAtTime(0.08, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-                osc.start(now);
-                osc.stop(now + 0.08);
-            } else if (type === 'win') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(523.25, now); // C5
-                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
-                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
-                gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-                osc.start(now);
-                osc.stop(now + 0.5);
-            } else if (type === 'bigwin') {
-                // Coşkulu Jackpot Sinyali
-                let notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, index) => {
-                    let o = audioCtx.createOscillator();
-                    let g = audioCtx.createGain();
-                    o.connect(g);
-                    g.connect(audioCtx.destination);
-                    o.frequency.setValueAtTime(freq, now + index * 0.1);
-                    g.gain.setValueAtTime(0.12, now + index * 0.1);
-                    g.gain.exponentialRampToValueAtTime(0.001, now + index * 0.1 + 0.3);
-                    o.start(now + index * 0.1);
-                    o.stop(now + index * 0.1 + 0.3);
-                });
-            }
-        }
-
-        // --- OYUN DEĞİŞKENLERİ ---
-        let balance = 10000;
-        let currentBet = 250;
-        let isSpinning = false;
-        let autoSpinActive = false;
-        let autoSpinInterval = null;
-
-        const symbols = [
-            { name: 'A', suit: '♠', multiplier: 2 },
-            { name: 'K', suit: '♥', multiplier: 5 },
-            { name: 'Q', suit: '♦', multiplier: 10 },
-            { name: 'J', suit: '♣', multiplier: 25 },
-            { name: 'AS', suit: '★', multiplier: 100 }
-        ];
-
-        const rows = 5;
-        const cols = 4;
-        let boardData = [];
-
-        function initBoard() {
-            const board = document.getElementById('slotBoard');
-            board.innerHTML = '';
-            boardData = [];
-
-            for (let i = 0; i < (rows * cols); i++) {
-                const sym = getRandomSymbol();
-                boardData.push(sym);
-
-                const slot = document.createElement('div');
-                slot.className = 'card-slot';
-                slot.id = `slot-${i}`;
-                slot.innerHTML = `<div>${sym.name}</div><div class="suit">${sym.suit}</div>`;
-                board.appendChild(slot);
-            }
-        }
-
-        function getRandomSymbol() {
-            // Çarpan olasılık dağılımı (Gerçekçi oran simülasyonu)
-            const rand = Math.random();
-            if (rand < 0.40) return symbols[0]; // A (2x)
-            if (rand < 0.70) return symbols[1]; // K (5x)
-            if (rand < 0.88) return symbols[2]; // Q (10x)
-            if (rand < 0.97) return symbols[3]; // J (25x)
-            return symbols[4]; // AS (100x)
-        }
-
-        function changeBet(amount) {
-            playSound('click');
-            currentBet += amount;
-            if (currentBet < 50) currentBet = 50;
-            if (currentBet > balance) currentBet = balance;
-            document.getElementById('currentBet').innerText = currentBet.toLocaleString();
-        }
-
-        function toggleAutoSpin() {
-            playSound('click');
-            autoSpinActive = !autoSpinActive;
-            const autoBtn = document.getElementById('autoBtn');
-            if (autoSpinActive) {
-                autoBtn.innerText = "Auto Spin: AÇIK";
-                autoBtn.classList.add('active');
-                autoSpinInterval = setInterval(() => {
-                    if (!isSpinning) spin();
-                }, 1500);
-            } else {
-                autoBtn.innerText = "Auto Spin: KAPALI";
-                autoBtn.classList.remove('active');
-                clearInterval(autoSpinInterval);
-            }
-        }
-
-        function spin() {
-            if (isSpinning) return;
-            if (balance < currentBet) {
-                alert("Yetersiz bakiye! Lütfen bakiye yükleyin.");
-                if (autoSpinActive) toggleAutoSpin();
-                return;
-            }
-
-            balance -= currentBet;
-            updateBalance();
-            isSpinning = true;
-            document.getElementById('spinBtn').disabled = true;
-            document.getElementById('lastWin').innerText = "0";
-
-            // Önceki kazanma efektlerini temizle
-            for (let i = 0; i < (rows * cols); i++) {
-                document.getElementById(`slot-${i}`).classList.remove('win');
-            }
-
-            // Spin Animasyon Efekti (Dönüş sesleri)
-            let spinCount = 0;
-            const spinTimer = setInterval(() => {
-                playSound('spin');
-                for (let i = 0; i < (rows * cols); i++) {
-                    const tempSym = getRandomSymbol();
-                    const slot = document.getElementById(`slot-${i}`);
-                    slot.innerHTML = `<div>${tempSym.name}</div><div class="suit">${tempSym.suit}</div>`;
-                }
-                spinCount++;
-
-                if (spinCount > 10) {
-                    clearInterval(spinTimer);
-                    finalizeSpin();
-                }
-            }, 80);
-        }
-
-        function finalizeSpin() {
-            const board = document.getElementById('slotBoard');
-            board.innerHTML = '';
-            boardData = [];
-
-            let matchedSymbols = {};
-
-            for (let i = 0; i < (rows * cols); i++) {
-                const sym = getRandomSymbol();
-                boardData.push(sym);
-
-                // Aynı sembollerin sayısını takip et
-                matchedSymbols[sym.name] = (matchedSymbols[sym.name] || 0) + 1;
-
-                const slot = document.createElement('div');
-                slot.className = 'card-slot';
-                slot.id = `slot-${i}`;
-                slot.innerHTML = `<div>${sym.name}</div><div class="suit">${sym.suit}</div>`;
-                board.appendChild(slot);
-            }
-
-            // Kazanç Hesaplama (Aynı sembolden 4 veya daha fazla gelirse)
-            let totalWin = 0;
-            let winningSymbolName = null;
-
-            for (let symName in matchedSymbols) {
-                if (matchedSymbols[symName] >= 4) {
-                    const symObj = symbols.find(s => s.name === symName);
-                    totalWin += currentBet * symObj.multiplier;
-                    winningSymbolName = symName;
-                }
-            }
-
-            if (totalWin > 0) {
-                balance += totalWin;
-                document.getElementById('lastWin').innerText = totalWin.toLocaleString();
-
-                // Kazanan slotları parlat
-                for (let i = 0; i < (rows * cols); i++) {
-                    if (boardData[i].name === winningSymbolName) {
-                        document.getElementById(`slot-${i}`).classList.add('win');
-                    }
-                }
-
-                if (totalWin >= currentBet * 25) {
-                    // Büyük Kazanç (Big Win) Efektleri
-                    playSound('bigwin');
-                    document.body.classList.add('shake-screen');
-                    setTimeout(() => document.body.classList.remove('shake-screen'), 500);
-                    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                } else {
-                    playSound('win');
-                    confetti({ particleCount: 50, spread: 50, origin: { y: 0.7 } });
-                }
-            }
-
-            updateBalance();
-            isSpinning = false;
-            document.getElementById('spinBtn').disabled = false;
-        }
-
-        function updateBalance() {
-            document.getElementById('balance').innerText = balance.toLocaleString();
-        }
-
-        // Oyunu Başlat
-        initBoard();
-    </script>
-</body>
-          </html>
-              
+        .ticker-item b { color: var(--text-main); }
+        .ticker-item span
+        
