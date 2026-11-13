@@ -1,1 +1,70 @@
 
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KORJEBET Demo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101015;color:white;font-family:Arial;text-align:center}
+header{padding:22px;border-bottom:1px solid #66502c}
+h1{color:#e6bd69;letter-spacing:4px}
+main{max-width:480px;margin:35px auto;padding:20px}
+.card{background:#202027;border:1px solid #806337;border-radius:18px;padding:25px}
+.reels{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:25px 0}
+.reels span{background:#111;padding:15px 2px;border-radius:8px;font-size:25px}
+button{background:#e6bd69;border:0;border-radius:10px;padding:15px 30px;font-weight:bold;font-size:17px}
+select{padding:12px;background:#111;color:white;border-radius:8px}
+p{color:#bbb}
+</style>
+</head>
+<body>
+<header><h1>KORJEBET</h1><p>SANAL KREDİ DEMOSU</p></header>
+<main>
+<div class="card">
+<h2>Hoş geldin!</h2>
+<p>Sanal bakiyen</p>
+<h2 id="balance">1000 kredi</h2>
+<div class="reels" id="reels">
+<span>🍒</span><span>⭐</span><span>💎</span><span>🔔</span><span>🍋</span>
+<span>🍋</span><span>🍒</span><span>⭐</span><span>💎</span><span>🔔</span>
+<span>💎</span><span>🔔</span><span>🍋</span><span>🍒</span><span>⭐</span>
+<span>⭐</span><span>💎</span><span>🔔</span><span>🍋</span><span>🍒</span>
+</div>
+<p>Oyun sonucu rastgele belirlenir.</p>
+<select id="bet">
+<option value="10">10 kredi</option>
+<option value="25">25 kredi</option>
+<option value="50">50 kredi</option>
+</select>
+<br><br>
+<button onclick="spin()">SPIN</button>
+<p id="result">İyi eğlenceler!</p>
+</div>
+<p>Bu yalnızca sanal kredili bir demo oyunudur.</p>
+</main>
+<script>
+let balance=1000;
+function spin(){
+let bet=Number(document.getElementById("bet").value);
+if(balance<bet){document.getElementById("result").textContent="Yeterli kredin yok.";return;}
+balance-=bet;
+let symbols=["🍒","⭐","💎","🔔","🍋"];
+let cells=Array.from({length:20},()=>symbols[Math.floor(Math.random()*symbols.length)]);
+let won=Math.random()<0.20;
+if(won){
+let row=Math.floor(Math.random()*4);
+let start=Math.floor(Math.random()*3);
+let s=symbols[Math.floor(Math.random()*symbols.length)];
+for(let i=0;i<3;i++)cells[row*5+start+i]=s;
+balance+=bet*2;
+}
+document.getElementById("reels").innerHTML=cells.map(x=>"<span>"+x+"</span>").join("");
+document.getElementById("balance").textContent=balance+" kredi";
+document.getElementById("result").textContent=won?"Tebrikler! Sanal kredi kazandın.":"Bu tur kazanamadın.";
+}
+</script>
+</body>
+</html>
