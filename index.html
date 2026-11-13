@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr", global>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KORJEBET | Demo</title>
+<title>KORJEBET | Real</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#08090d;color:#fff;font-family:Arial,sans-serif}
@@ -63,8 +63,8 @@ Sonuçlar tüm oyuncular için aynı kuralla rastgele belirlenir.
 </main>
 <footer>© KORJEBET · Yalnızca sanal kredili demo. Gerçek para kullanılmaz.</footer>
 <script>
-let balance=1000;
-const symbols=["🍒","⭐","💎","🔔","🍋"];
+let balance=100000;
+const symbols=["🍒","⭐","💎","🔔","🍋","💵"];
 const reels=document.getElementById("reels");
 function draw(cells){
 reels.innerHTML=cells.map(s=>"<span>"+s+"</span>").join("");
@@ -83,7 +83,7 @@ const row=Math.floor(Math.random()*4);
 const start=Math.floor(Math.random()*3);
 const symbol=symbols[Math.floor(Math.random()*symbols.length)];
 for(let i=0;i<3;i++)cells[row*5+start+i]=symbol;
-balance+=100;
+balance+=1000;
 }
 draw(cells);
 document.getElementById("balance").textContent=balance;
